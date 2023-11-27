@@ -21,27 +21,32 @@ st.subheader('User Input parameters')
 st.write(df)
 
 # Load the vectorizers
-with open('vectorizer_unigrams.pkl', 'rb') as unigram_vectorizer_file:
-    vectorizer_unigrams = pickle.load(unigram_vectorizer_file)
+try:
+    # Load the vectorizers
+    with open('vectorizer_unigrams.pkl', 'rb') as unigram_vectorizer_file:
+        vectorizer_unigrams = pickle.load(unigram_vectorizer_file)
 
-with open('vectorizer_bigrams.pkl', 'rb') as bigram_vectorizer_file:
-    vectorizer_bigrams = pickle.load(bigram_vectorizer_file)
+    with open('vectorizer_bigrams.pkl', 'rb') as bigram_vectorizer_file:
+        vectorizer_bigrams = pickle.load(bigram_vectorizer_file)
 
-# Transform the input features using the vectorizers
-new_data_tfidf_unigrams = vectorizer_unigrams.transform(df['text'])
-new_data_tfidf_bigrams = vectorizer_bigrams.transform(df['text'])
+    # Transform the input features using the vectorizers
+    new_data_tfidf_unigrams = vectorizer_unigrams.transform(df['text'])
+    new_data_tfidf_bigrams = vectorizer_bigrams.transform(df['text'])
 
-# Concatenate unigrams and bigrams
-new_data_tfidf_combined = np.hstack((new_data_tfidf_unigrams.toarray(), new_data_tfidf_bigrams.toarray()))
+    # Concatenate unigrams and bigrams
+    new_data_tfidf_combined = np.hstack((new_data_tfidf_unigrams.toarray(), new_data_tfidf_bigrams.toarray()))
 
-# Load the RandomForestClassifier model
-with open('rf_model.pkl', 'rb') as model_file:
-    rf_model = pickle.load(model_file)
+    # Load the RandomForestClassifier model
+    with open('rf_model.pkl', 'rb') as model_file:
+        rf_model = pickle.load(model_file)
 
-# Use the trained model to predict
-new_prediction = rf_model.predict(new_data_tfidf_combined)
+    # Use the trained model to predict
+    new_prediction = rf_model.predict(new_data_tfidf_combined)
 
-# Display the prediction result
-st.subheader('Predicted Result')
-result = 'Fake News' if new_prediction[0] == 0 else 'Real News'
-st.write(result)
+    # Display the prediction result
+    st.subheader('Predicted Result')
+    result = 'Fake News' if new_prediction[0] == 0 else 'Real News'
+    st.write(result)
+
+except Exception as e:
+    st.error(f"An error occurred: {e}")
