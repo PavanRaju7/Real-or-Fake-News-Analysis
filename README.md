@@ -19,3 +19,5 @@
 
 6. Deployment and UI Development:
  Successfully deployed the final model locally and globally using Streamlit, showcasing proficiency in model deployment and user interface development. Demonstrated the ability to make complex models accessible through streamlined and user-friendly interfaces, enhancing the practical application of the developed system.
+
+certificate: [2.AI-DS-13911-Pavan R internship.pdf](https://github.com/PavanRaju7/Real-or-Fake-News-Analysis/files/13623461/2.AI-DS-13911-Pavan.R.internship.pdf)
